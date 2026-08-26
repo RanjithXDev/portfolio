@@ -16,6 +16,7 @@ export default function Hero() {
             key={action.label}
             href={action.href}
             className={action.variant === 'primary' ? styles.primary : styles.ghost}
+            {...(action.download ? { download: true } : {})}
           >
             {action.label}
           </a>

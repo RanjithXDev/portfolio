@@ -2,10 +2,11 @@ import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { scrollStore } from './scrollStore';
+import { core as coreConfig, palette, resolveColor } from '../data/sceneConfig';
 import { simplexNoise3D } from './glsl/noise';
 
-const AMBER = new THREE.Color('#FFB454');
-const CYAN = new THREE.Color('#5EEAD4');
+const AMBER = new THREE.Color(palette.amber);
+const CYAN = new THREE.Color(palette.cyan);
 
 const vertexShader = /* glsl */ `
   uniform float uTime;
@@ -44,6 +45,8 @@ const fragmentShader = /* glsl */ `
   uniform float uMix;      // 0 = amber dominant, 1 = cyan dominant
   uniform float uPulse;
   uniform float uTime;
+  uniform float uRimPower;
+  uniform float uMaxIntensity;
 
   varying vec3 vNormalW;
   varying vec3 vViewDir;
@@ -55,7 +58,7 @@ const fragmentShader = /* glsl */ `
     float fresnel = 1.0 - clamp(dot(normalize(vNormalW), normalize(vViewDir)), 0.0, 1.0);
     // High exponent keeps the rim a thin band; a fat rim is what blows out
     // once bloom is applied.
-    float rim = pow(fresnel, 4.2);
+    float rim = pow(fresnel, uRimPower);
 
     // Amber owns the rim, cyan fills the interior, and uMix slides the whole
     // balance per section. Tying colour *positively* to fresnel washed the
@@ -68,7 +71,7 @@ const fragmentShader = /* glsl */ `
 
     // Held below 1.0 so bloom lifts the colour rather than clipping it white.
     float intensity = rim * (0.62 + uPulse * 0.22) + ridge;
-    intensity = clamp(intensity, 0.0, 0.92);
+    intensity = clamp(intensity, 0.0, uMaxIntensity);
 
     // Faint inner fill so the silhouette is never fully black.
     vec3 finalColor = color * intensity + color * 0.045;
@@ -81,7 +84,7 @@ const fragmentShader = /* glsl */ `
  * The signature centrepiece: a noise-displaced, fresnel-lit sphere wrapped in
  * counter-rotating wireframe shells.
  */
-export default function NeuralCore({ quality, radius = 1.05 }) {
+export default function NeuralCore({ quality, radius = coreConfig.radius }) {
   const materialRef = useRef();
   const groupRef = useRef();
   const shellRefs = useRef([]);
@@ -92,7 +95,9 @@ export default function NeuralCore({ quality, radius = 1.05 }) {
       uTime: { value: 0 },
       uPulse: { value: 0 },
       uMix: { value: 0 },
-      uDistortion: { value: 0.24 },
+      uDistortion: { value: coreConfig.distortion },
+      uRimPower: { value: coreConfig.rimPower },
+      uMaxIntensity: { value: coreConfig.maxIntensity },
       uAmber: { value: AMBER.clone() },
       uCyan: { value: CYAN.clone() },
     }),
@@ -101,14 +106,14 @@ export default function NeuralCore({ quality, radius = 1.05 }) {
 
   // Shell configuration: differing radii, opacity and rotation axes give the
   // core visual depth without extra geometry cost.
-  const shells = useMemo(() => {
-    const configs = [
-      { scale: 1.28, detail: 1, opacity: 0.085, color: AMBER, speed: 0.14, axis: [0.4, 1, 0.15] },
-      { scale: 1.55, detail: 1, opacity: 0.045, color: CYAN, speed: -0.09, axis: [1, 0.25, 0.5] },
-      { scale: 1.84, detail: 1, opacity: 0.028, color: AMBER, speed: 0.05, axis: [0.2, 0.6, 1] },
-    ];
-    return configs.slice(0, quality.shellCount);
-  }, [quality.shellCount]);
+  const shells = useMemo(
+    () =>
+      coreConfig.shells.slice(0, quality.shellCount).map((shell) => ({
+        ...shell,
+        color: new THREE.Color(resolveColor(shell.color)),
+      })),
+    [quality.shellCount]
+  );
 
   useFrame((state, delta) => {
     const t = state.clock.elapsedTime;
@@ -130,7 +135,7 @@ export default function NeuralCore({ quality, radius = 1.05 }) {
     if (quality.reducedMotion) return;
 
     if (groupRef.current) {
-      groupRef.current.rotation.y = t * 0.12;
+      groupRef.current.rotation.y = t * coreConfig.rotationSpeed;
       groupRef.current.rotation.x = Math.sin(t * 0.18) * 0.12;
     }
 

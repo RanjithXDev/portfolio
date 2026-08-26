@@ -4,8 +4,9 @@ import { EffectComposer, Bloom, Vignette, ChromaticAberration } from '@react-thr
 import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 import { scrollStore } from './scrollStore';
+import { postProcessing as cfg } from '../data/sceneConfig';
 
-const MAX_OFFSET = 0.0016;
+const MAX_OFFSET = cfg.chromaticAberration.maxOffset;
 
 export default function Effects({ quality }) {
   const current = useRef(0);
@@ -17,7 +18,11 @@ export default function Effects({ quality }) {
   useFrame((state, delta) => {
     // Aberration only during fast camera moves; at rest it fades to zero so
     // static frames stay clean.
-    const target = THREE.MathUtils.clamp(scrollStore.velocity / 14, 0, 1);
+    const target = THREE.MathUtils.clamp(
+      scrollStore.velocity / cfg.chromaticAberration.velocityScale,
+      0,
+      1
+    );
     current.current += (target - current.current) * Math.min(1, delta * 5);
 
     const offset = current.current * MAX_OFFSET;
@@ -28,10 +33,10 @@ export default function Effects({ quality }) {
     <EffectComposer disableNormalPass multisampling={0}>
       <Bloom
         intensity={quality.bloomIntensity}
-        luminanceThreshold={0.42}
-        luminanceSmoothing={0.22}
+        luminanceThreshold={cfg.bloom.luminanceThreshold}
+        luminanceSmoothing={cfg.bloom.luminanceSmoothing}
         mipmapBlur
-        radius={0.62}
+        radius={cfg.bloom.radius}
       />
       {quality.chromaticAberration ? (
         <ChromaticAberration
@@ -43,7 +48,7 @@ export default function Effects({ quality }) {
       ) : (
         <></>
       )}
-      <Vignette offset={0.26} darkness={0.66} eskil={false} />
+      <Vignette offset={cfg.vignette.offset} darkness={cfg.vignette.darkness} eskil={false} />
     </EffectComposer>
   );
 }

@@ -1,3 +1,5 @@
+import { qualityPresets } from '../data/sceneConfig';
+
 /**
  * Device capability tiers. Everything expensive in the scene reads from here
  * so a single detection drives particle counts, post-processing and DPR.
@@ -42,48 +44,6 @@ export function getQuality() {
   const reduced = prefersReducedMotion();
   const tier = reduced ? 'low' : detectTier();
 
-  const presets = {
-    high: {
-      tier: 'high',
-      particleCount: 900,
-      linkCount: 260,
-      toolNodes: 6,
-      shellCount: 3,
-      coreDetail: 64,
-      postProcessing: true,
-      bloomIntensity: 0.62,
-      chromaticAberration: true,
-      grid: true,
-      dpr: [1, 2],
-    },
-    medium: {
-      tier: 'medium',
-      particleCount: 380,
-      linkCount: 90,
-      toolNodes: 4,
-      shellCount: 2,
-      coreDetail: 32,
-      postProcessing: true,
-      bloomIntensity: 0.45,
-      chromaticAberration: false,
-      grid: true,
-      dpr: [1, 1.5],
-    },
-    low: {
-      tier: 'low',
-      particleCount: 140,
-      linkCount: 0,
-      toolNodes: 3,
-      shellCount: 1,
-      coreDetail: 16,
-      postProcessing: false,
-      bloomIntensity: 0,
-      chromaticAberration: false,
-      grid: false,
-      dpr: 1,
-    },
-  };
-
-  cached = { ...presets[tier], reducedMotion: reduced };
+  cached = { tier, ...qualityPresets[tier], reducedMotion: reduced };
   return cached;
 }

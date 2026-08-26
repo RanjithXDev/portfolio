@@ -25,8 +25,47 @@ never need to touch a component to update your information.
 | Skills by category | `skills.categories` |
 | Project cards | `projects.items` |
 | Contact rows and links | `contact.links` |
+| Education entries | `credentials.education` |
+| Certifications (and their PDFs) | `credentials.certifications.items` |
 | Terminal status lines per section | `statusLines` |
 | Left-hand nav order | `sections` |
+
+### Adding a certification
+
+Drop the PDF into `public/`, then append to
+`credentials.certifications.items` in `content.js`:
+
+```js
+{
+  name: 'AWS Certified Cloud Practitioner',
+  issuer: 'Amazon Web Services',
+  year: '2026',
+  file: '/aws-ccp.pdf',   // path under public/; use '' for no link
+}
+```
+
+Set `file: ''` and the card renders as plain text with no dead link.
+
+## Tuning the 3D scene
+
+**All scene values live in [`src/data/sceneConfig.js`](src/data/sceneConfig.js).**
+Nothing under `src/three/` contains a magic number or a hardcoded colour, so
+you can retune the whole look from that one file.
+
+| What to change | Key |
+| --- | --- |
+| Scene colours | `palette` |
+| Particle count / DPR / bloom per device tier | `qualityPresets` |
+| Core size, distortion, rim, wireframe shells | `core` |
+| Particle cloud radius, size, link density | `particles` |
+| Orbiting node paths, sizes, trail length | `toolNodes.orbits` |
+| Camera path, intro timing, damping, framing | `camera` |
+| Fog, lights, grid floor | `environment` |
+| Bloom / vignette / chromatic aberration | `postProcessing` |
+
+Colour fields accept either a `palette` key (`'amber'`, `'cyan'`) or a raw
+hex string. If the scene feels heavy on your machine, lower
+`qualityPresets.high.particleCount` and `bloomIntensity` first.
 
 ### Adding a real project
 

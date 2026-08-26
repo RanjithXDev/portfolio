@@ -4,7 +4,7 @@ import styles from './Projects.module.css';
 
 export default function Projects() {
   return (
-    <Section id="projects" index={4} heading={projects.heading}>
+    <Section id="projects" index={5} heading={projects.heading}>
       {projects.note && <p className={styles.note}>{projects.note}</p>}
 
       <div className={styles.grid}>

@@ -1,7 +1,8 @@
 import { useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
-import { scrollStore, cameraKeyframes } from './scrollStore';
+import { scrollStore } from './scrollStore';
+import { camera as cameraConfig } from '../data/sceneConfig';
 
 const tmpA = new THREE.Vector3();
 const tmpB = new THREE.Vector3();
@@ -18,7 +19,7 @@ function smoothstep(t) {
  * keyframes with an eased blend so segment boundaries are not felt.
  */
 function sampleKeyframes(progress, outPosition, outTarget) {
-  const frames = cameraKeyframes;
+  const frames = cameraConfig.keyframes;
   let i = 0;
   while (i < frames.length - 2 && progress > frames[i + 1].at) i += 1;
 
@@ -45,9 +46,16 @@ function sampleKeyframes(progress, outPosition, outTarget) {
  * collapses to a top block, so the core re-centres.
  */
 function framingOffset(width) {
-  if (width < 900) return 0;
+  const { minWidth, maxWidth, minOffset, maxOffset } = cameraConfig.framing;
+  if (width < minWidth) return 0;
   // Scales with viewport so the core stays in the console band at any width.
-  return THREE.MathUtils.mapLinear(THREE.MathUtils.clamp(width, 900, 2200), 900, 2200, 1.9, 3.6);
+  return THREE.MathUtils.mapLinear(
+    THREE.MathUtils.clamp(width, minWidth, maxWidth),
+    minWidth,
+    maxWidth,
+    minOffset,
+    maxOffset
+  );
 }
 
 export default function CameraRig({ quality }) {
@@ -59,9 +67,10 @@ export default function CameraRig({ quality }) {
 
     if (quality.reducedMotion) {
       // Static framed composition — no fly-through at all.
-      camera.position.set(2.4 + offsetX, 1.2, 5.8);
+      const [sx, sy, sz] = cameraConfig.staticFrame.position;
+      camera.position.set(sx + offsetX, sy, sz);
       camera.lookAt(offsetX, 0, 0);
-      scrollStore.mix = 0.3;
+      scrollStore.mix = cameraConfig.staticFrame.mix;
       return;
     }
 
@@ -76,7 +85,7 @@ export default function CameraRig({ quality }) {
     // The intro pulls the camera back along its own view vector and eases in.
     const intro = scrollStore.intro;
     if (intro < 1) {
-      const pullBack = (1 - intro) * 9.5;
+      const pullBack = (1 - intro) * cameraConfig.introPullBack;
       desired.multiplyScalar(1 + (1 - intro) * 0.35);
       desired.z += pullBack;
     }
@@ -88,7 +97,7 @@ export default function CameraRig({ quality }) {
     }
 
     // Critically-damped follow: frame-rate independent and never overshoots.
-    const damping = 1 - Math.exp(-3.2 * delta);
+    const damping = 1 - Math.exp(-cameraConfig.damping * delta);
     camera.position.lerp(desired, damping);
     camera.lookAt(desiredTarget);
 

@@ -4,7 +4,7 @@ import styles from './Contact.module.css';
 
 export default function Contact() {
   return (
-    <Section id="contact" index={5} heading={contact.heading}>
+    <Section id="contact" index={6} heading={contact.heading}>
       <p className={styles.intro}>{contact.intro}</p>
 
       <ul className={styles.links}>

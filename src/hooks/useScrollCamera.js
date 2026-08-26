@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { scrollStore } from '../three/scrollStore';
+import { camera as cameraConfig } from '../data/sceneConfig';
 import { prefersReducedMotion } from '../three/quality';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -29,11 +30,16 @@ export function useScrollCamera() {
       },
     });
 
-    // 2.6s cinematic push-in, eased so it decelerates into the resting frame.
+    // Cinematic push-in, eased so it decelerates into the resting frame.
     const intro = gsap.fromTo(
       scrollStore,
       { intro: 0 },
-      { intro: 1, duration: 2.6, ease: 'power3.out', delay: 0.25 }
+      {
+        intro: 1,
+        duration: cameraConfig.introDuration,
+        ease: 'power3.out',
+        delay: cameraConfig.introDelay,
+      }
     );
 
     return () => {

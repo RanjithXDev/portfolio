@@ -11,6 +11,8 @@ export const meta = {
   location: 'Chennai, Tamil Nadu, India',
   // Used for Open Graph tags and the canonical link. Update after deploying.
   siteUrl: 'https://ranjithxdev.dev',
+  // Path under public/. Set to '' to hide the CV link entirely.
+  resume: '/Ranjith_CV.pdf',
   description:
     'Junior Software Engineer building AI agents and cloud applications with AWS Bedrock, Amazon Bedrock AgentCore, Python and the MERN stack.',
 };
@@ -25,6 +27,7 @@ export const hero = {
   actions: [
     { label: 'View Experience', href: '#experience', variant: 'primary' },
     { label: 'Get in Touch', href: '#contact', variant: 'ghost' },
+    { label: 'Download CV', href: '/Ranjith_CV.pdf', variant: 'ghost', download: true },
   ],
 };
 
@@ -80,6 +83,58 @@ export const skills = {
       items: ['WordPress', 'PHP', 'BuddyBoss', 'HTML/CSS'],
     },
   ],
+};
+
+/**
+ * Education and certifications.
+ *
+ * Certificate files live in `public/`. Set `file` to a path under public
+ * (e.g. '/mongodb.pdf') to make the card a link, or leave it empty ('') and
+ * the card renders as plain text with no dead link.
+ *
+ * Add a certification by appending to `certifications.items`:
+ *   {
+ *     name:   'Certification name',
+ *     issuer: 'Issuing body',
+ *     year:   '2025',
+ *     file:   '/your-certificate.pdf',   // or '' for no link
+ *   }
+ */
+export const credentials = {
+  heading: 'Education & Certifications',
+
+  education: [
+    {
+      degree: 'B.Tech, Artificial Intelligence and Data Science',
+      institution: 'Kongu Engineering College',
+      period: '2023 — 2027',
+      result: 'CGPA 8.43 / 10.00',
+    },
+    {
+      degree: 'Higher Secondary Certificate (HSC)',
+      institution: 'Kongu Matriculation Higher Secondary School',
+      period: '2022 — 2023',
+      result: '85.16%',
+    },
+  ],
+
+  certifications: {
+    label: 'Certifications',
+    items: [
+      {
+        name: 'MongoDB Certified Associate Developer',
+        issuer: 'MongoDB',
+        year: '',
+        file: '/mongodb.pdf',
+      },
+      {
+        name: 'Oracle APEX Cloud Developer Certified Professional',
+        issuer: 'Oracle',
+        year: '',
+        file: '/oracle_certificate.pdf',
+      },
+    ],
+  },
 };
 
 /**
@@ -153,6 +208,7 @@ export const statusLines = {
   about: 'loading profile.json — 3 records',
   experience: 'querying work_history — 1 role active',
   skills: 'indexing capabilities — 5 categories',
+  credentials: 'verifying credentials — 2 certifications',
   projects: 'scanning repositories — 3 slots reserved',
   contact: 'opening channel — awaiting input',
 };
@@ -161,6 +217,7 @@ export const sections = [
   { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
   { id: 'skills', label: 'Skills' },
+  { id: 'credentials', label: 'Credentials' },
   { id: 'projects', label: 'Projects' },
   { id: 'contact', label: 'Contact' },
 ];

@@ -1,13 +1,10 @@
 import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { scrollStore } from './scrollStore';
+import { toolNodes as cfg, palette, resolveColor } from '../data/sceneConfig';
 
-const AMBER = new THREE.Color('#FFB454');
-const CYAN = new THREE.Color('#5EEAD4');
-
-const TRAIL_SEGMENTS = 48;
-const TRAIL_ARC = Math.PI * 0.62; // how far behind the node the trail reaches
+const TRAIL_SEGMENTS = cfg.trailSegments;
+const TRAIL_ARC = cfg.trailArc;
 
 /**
  * Small glowing spheres on tilted elliptical orbits, each dragging a fading
@@ -17,17 +14,14 @@ export default function ToolNodes({ quality }) {
   const nodeRefs = useRef([]);
   const trailRefs = useRef([]);
 
-  const orbits = useMemo(() => {
-    const configs = [
-      { a: 2.30, b: 1.72, speed: 0.42, tilt: [0.55, 0.20, 0.10], phase: 0.0, color: AMBER, size: 0.062 },
-      { a: 2.72, b: 2.10, speed: -0.31, tilt: [-0.38, 0.85, 0.30], phase: 1.9, color: CYAN, size: 0.050 },
-      { a: 1.98, b: 2.44, speed: 0.36, tilt: [0.95, -0.30, 0.55], phase: 3.4, color: CYAN, size: 0.044 },
-      { a: 3.05, b: 2.28, speed: -0.24, tilt: [0.18, 0.42, -0.70], phase: 5.0, color: AMBER, size: 0.056 },
-      { a: 2.52, b: 2.86, speed: 0.29, tilt: [-0.72, -0.25, 0.42], phase: 2.6, color: AMBER, size: 0.040 },
-      { a: 2.16, b: 2.02, speed: -0.47, tilt: [0.30, 1.15, 0.85], phase: 4.3, color: CYAN, size: 0.048 },
-    ];
-    return configs.slice(0, quality.toolNodes);
-  }, [quality.toolNodes]);
+  const orbits = useMemo(
+    () =>
+      cfg.orbits.slice(0, quality.toolNodes).map((orbit) => ({
+        ...orbit,
+        color: new THREE.Color(resolveColor(orbit.color)),
+      })),
+    [quality.toolNodes]
+  );
 
   // One trail geometry per orbit. Alpha is baked per-vertex as a gradient:
   // the head sits at the node, the tail fades to nothing.
@@ -108,7 +102,10 @@ export default function ToolNodes({ quality }) {
                 transparent
                 depthWrite={false}
                 blending={THREE.AdditiveBlending}
-                uniforms={{ uColor: { value: color } }}
+                uniforms={{
+                  uColor: { value: color },
+                  uTrailOpacity: { value: cfg.trailOpacity },
+                }}
                 vertexShader={/* glsl */ `
                   attribute float aAlpha;
                   varying float vAlpha;
@@ -119,9 +116,10 @@ export default function ToolNodes({ quality }) {
                 `}
                 fragmentShader={/* glsl */ `
                   uniform vec3 uColor;
+                  uniform float uTrailOpacity;
                   varying float vAlpha;
                   void main() {
-                    gl_FragColor = vec4(uColor, vAlpha * 0.85);
+                    gl_FragColor = vec4(uColor, vAlpha * uTrailOpacity);
                   }
                 `}
               />

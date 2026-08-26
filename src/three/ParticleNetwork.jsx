@@ -2,13 +2,14 @@ import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { scrollStore } from './scrollStore';
+import { particles as cfg, palette } from '../data/sceneConfig';
 
-const AMBER = new THREE.Color('#FFB454');
-const CYAN = new THREE.Color('#5EEAD4');
+const AMBER = new THREE.Color(palette.amber);
+const CYAN = new THREE.Color(palette.cyan);
 
-const INNER_RADIUS = 2.05;
-const OUTER_RADIUS = 3.05;
-const LINK_DISTANCE = 0.92;
+const INNER_RADIUS = cfg.innerRadius;
+const OUTER_RADIUS = cfg.outerRadius;
+const LINK_DISTANCE = cfg.linkDistance;
 
 /**
  * Deterministic PRNG so the layout is identical across reloads — a random
@@ -56,6 +57,7 @@ const pointsFragment = /* glsl */ `
   uniform vec3 uAmber;
   uniform vec3 uCyan;
   uniform float uMix;
+  uniform float uPointOpacity;
 
   varying float vAlpha;
   varying float vTint;
@@ -68,7 +70,7 @@ const pointsFragment = /* glsl */ `
     if (mask < 0.01) discard;
 
     vec3 color = mix(uAmber, uCyan, clamp(vTint + uMix * 0.4, 0.0, 1.0));
-    gl_FragColor = vec4(color, mask * vAlpha * 0.62);
+    gl_FragColor = vec4(color, mask * vAlpha * uPointOpacity);
   }
 `;
 
@@ -119,7 +121,7 @@ export default function ParticleNetwork({ quality }) {
   const mixRef = useRef(0);
 
   const { pointsGeometry, linesGeometry } = useMemo(() => {
-    const rand = mulberry32(20260827);
+    const rand = mulberry32(cfg.seed);
     const count = quality.particleCount;
 
     const positions = new Float32Array(count * 3);
@@ -196,9 +198,10 @@ export default function ParticleNetwork({ quality }) {
   const pointsUniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uSize: { value: 9.5 },
+      uSize: { value: cfg.pointSize },
       uPixelRatio: { value: Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2) },
       uMix: { value: 0 },
+      uPointOpacity: { value: cfg.pointOpacity },
       uAmber: { value: AMBER.clone() },
       uCyan: { value: CYAN.clone() },
     }),
@@ -209,7 +212,7 @@ export default function ParticleNetwork({ quality }) {
     () => ({
       uTime: { value: 0 },
       uMix: { value: 0 },
-      uOpacity: { value: 0.16 },
+      uOpacity: { value: cfg.linkOpacity },
       uAmber: { value: AMBER.clone() },
       uCyan: { value: CYAN.clone() },
     }),
@@ -233,9 +236,9 @@ export default function ParticleNetwork({ quality }) {
     if (quality.reducedMotion || !groupRef.current) return;
 
     // Slow counter-rotation against the core, plus a gentle radial breathe.
-    groupRef.current.rotation.y = -t * 0.035;
+    groupRef.current.rotation.y = t * cfg.rotationSpeed;
     groupRef.current.rotation.x = Math.sin(t * 0.11) * 0.16;
-    const breathe = 1 + Math.sin(t * 0.42) * 0.022;
+    const breathe = 1 + Math.sin(t * 0.42) * cfg.breatheAmount;
     groupRef.current.scale.setScalar(breathe);
   });
 

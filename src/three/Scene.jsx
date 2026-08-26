@@ -8,18 +8,29 @@ import ToolNodes from './ToolNodes';
 import CameraRig from './CameraRig';
 import Effects from './Effects';
 import { getQuality } from './quality';
+import {
+  palette,
+  camera as cameraConfig,
+  environment,
+  resolveColor,
+} from '../data/sceneConfig';
 import styles from './Scene.module.css';
-
-const BG = '#0A0E12';
 
 function Lights() {
   return (
     <>
       {/* Moody accent rim lighting — no white key light. */}
-      <ambientLight intensity={0.12} color="#2A3A48" />
-      <pointLight position={[3.2, 2.4, 2.6]} intensity={22} color="#FFB454" distance={16} decay={2} />
-      <pointLight position={[-3.4, -1.6, 2.0]} intensity={18} color="#5EEAD4" distance={16} decay={2} />
-      <pointLight position={[0, -2.8, -3.2]} intensity={10} color="#FFB454" distance={14} decay={2} />
+      <ambientLight intensity={environment.ambientIntensity} color={palette.ambient} />
+      {environment.lights.map((light) => (
+        <pointLight
+          key={light.position.join(',')}
+          position={light.position}
+          intensity={light.intensity}
+          color={resolveColor(light.color)}
+          distance={light.distance}
+          decay={2}
+        />
+      ))}
     </>
   );
 }
@@ -36,11 +47,16 @@ export default function Scene() {
           alpha: true,
           powerPreference: quality.tier === 'high' ? 'high-performance' : 'low-power',
         }}
-        camera={{ position: [0, 0, 16], fov: 42, near: 0.1, far: 80 }}
+        camera={{
+          position: [0, 0, 16],
+          fov: cameraConfig.fov,
+          near: cameraConfig.near,
+          far: cameraConfig.far,
+        }}
         onCreated={({ gl, scene }) => {
           gl.toneMapping = THREE.ACESFilmicToneMapping;
-          gl.toneMappingExposure = 0.95;
-          scene.fog = new THREE.FogExp2(BG, 0.075);
+          gl.toneMappingExposure = environment.toneMappingExposure;
+          scene.fog = new THREE.FogExp2(palette.background, environment.fogDensity);
         }}
       >
         <Suspense fallback={null}>
@@ -53,16 +69,16 @@ export default function Scene() {
 
           {quality.grid && (
             <Grid
-              position={[0, -3.4, 0]}
+              position={environment.grid.position}
               args={[40, 40]}
-              cellSize={0.7}
+              cellSize={environment.grid.cellSize}
               cellThickness={0.5}
-              cellColor="#223041"
-              sectionSize={3.5}
+              cellColor={environment.grid.cellColor}
+              sectionSize={environment.grid.sectionSize}
               sectionThickness={0.8}
-              sectionColor="#2E4256"
-              fadeDistance={22}
-              fadeStrength={2.4}
+              sectionColor={environment.grid.sectionColor}
+              fadeDistance={environment.grid.fadeDistance}
+              fadeStrength={environment.grid.fadeStrength}
               infiniteGrid
               followCamera={false}
             />
