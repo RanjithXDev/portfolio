@@ -1,8 +1,10 @@
 import Section from './Section';
-import { contact } from '../data/content';
+import { useContentSlice } from '../content/ContentContext';
 import styles from './Contact.module.css';
 
 export default function Contact() {
+  const contact = useContentSlice('contact');
+
   return (
     <Section id="contact" index={6} heading={contact.heading}>
       <p className={styles.intro}>{contact.intro}</p>

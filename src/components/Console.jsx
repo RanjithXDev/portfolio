@@ -1,11 +1,19 @@
-import { meta, sections, statusLines } from '../data/content';
+import { useContent } from '../content/ContentContext';
+import { useMemo } from 'react';
 import { useActiveSection, useTypewriter } from '../hooks/useReveal';
 import styles from './Console.module.css';
 
-const SECTION_IDS = ['hero', ...sections.map((section) => section.id)];
-
 export default function Console() {
-  const activeSection = useActiveSection(SECTION_IDS, 'hero');
+  const { meta, sections, statusLines } = useContent();
+
+  // Rebuilt only when the section list itself changes (e.g. remote content
+  // adds a section), not on every render.
+  const sectionIds = useMemo(
+    () => ['hero', ...sections.map((section) => section.id)],
+    [sections]
+  );
+
+  const activeSection = useActiveSection(sectionIds, 'hero');
   const status = useTypewriter(statusLines[activeSection] ?? statusLines.hero);
 
   return (

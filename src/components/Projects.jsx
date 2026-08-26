@@ -1,8 +1,10 @@
 import Section from './Section';
-import { projects } from '../data/content';
+import { useContentSlice } from '../content/ContentContext';
 import styles from './Projects.module.css';
 
 export default function Projects() {
+  const projects = useContentSlice('projects');
+
   return (
     <Section id="projects" index={5} heading={projects.heading}>
       {projects.note && <p className={styles.note}>{projects.note}</p>}

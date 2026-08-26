@@ -8,6 +8,7 @@ import Credentials from './components/Credentials';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { ContentProvider } from './content/ContentContext';
 import { useScrollCamera } from './hooks/useScrollCamera';
 import styles from './App.module.css';
 
@@ -18,7 +19,7 @@ export default function App() {
   useScrollCamera();
 
   return (
-    <>
+    <ContentProvider>
       <Suspense fallback={null}>
         <Scene />
       </Suspense>
@@ -43,6 +44,6 @@ export default function App() {
           </div>
         </main>
       </div>
-    </>
+    </ContentProvider>
   );
 }

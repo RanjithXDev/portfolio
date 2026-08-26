@@ -1,7 +1,9 @@
-import { hero } from '../data/content';
+import { useContentSlice } from '../content/ContentContext';
 import styles from './Hero.module.css';
 
 export default function Hero() {
+  const hero = useContentSlice('hero');
+
   return (
     <section id="hero" className={styles.hero}>
       <p className={styles.greeting}>{hero.greeting}</p>

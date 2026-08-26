@@ -46,6 +46,63 @@ Drop the PDF into `public/`, then append to
 
 Set `file: ''` and the card renders as plain text with no dead link.
 
+## Editing content without redeploying
+
+Content is loaded at runtime, so you can change copy on a live site without
+touching the code or rebuilding.
+
+**How it resolves:**
+
+1. `src/data/content.js` is compiled into the bundle and renders immediately.
+2. In parallel the app fetches `VITE_CONTENT_URL` (default `/content.json`).
+3. If that succeeds, it is deep-merged **over** the bundled content.
+4. If it fails — offline, 404, 500, timeout, malformed JSON — the bundled
+   content stays. The site never renders blank because a fetch failed.
+
+First paint always uses bundled content, so there is no spinner and no
+SEO penalty from waiting on the network.
+
+### Publishing a content change
+
+```bash
+npm run content:export      # regenerates public/content.json from content.js
+```
+
+Then either redeploy, or upload that `content.json` to wherever you host it
+and point `VITE_CONTENT_URL` at it:
+
+```bash
+# .env
+VITE_CONTENT_URL=https://raw.githubusercontent.com/RanjithXDev/portfolio-content/main/content.json
+```
+
+Any URL returning the right JSON works — a GitHub raw file, an S3/R2 object,
+a serverless function, or a headless CMS endpoint. No backend to run.
+
+**Partial overrides are fine.** The remote file only needs the keys you want
+to change:
+
+```json
+{
+  "hero": { "role": "Software Engineer" },
+  "credentials": {
+    "certifications": {
+      "items": [
+        { "name": "AWS Certified Cloud Practitioner", "issuer": "AWS", "year": "2026", "file": "" }
+      ]
+    }
+  }
+}
+```
+
+Objects merge key by key; **arrays are replaced wholesale**, so the snippet
+above replaces the certification list entirely rather than appending to it.
+That is deliberate — index-merging would make it impossible to remove an
+entry remotely.
+
+Note that files referenced by path (certificate PDFs, the CV) still have to
+exist in your deployment's `public/`, or be given absolute URLs.
+
 ## Tuning the 3D scene
 
 **All scene values live in [`src/data/sceneConfig.js`](src/data/sceneConfig.js).**

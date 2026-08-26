@@ -1,8 +1,10 @@
 import Section from './Section';
-import { credentials } from '../data/content';
+import { useContentSlice } from '../content/ContentContext';
 import styles from './Credentials.module.css';
 
 export default function Credentials() {
+  const credentials = useContentSlice('credentials');
+
   const { education, certifications } = credentials;
 
   return (

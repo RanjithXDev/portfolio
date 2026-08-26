@@ -1,8 +1,10 @@
 import Section from './Section';
-import { experience } from '../data/content';
+import { useContentSlice } from '../content/ContentContext';
 import styles from './Experience.module.css';
 
 export default function Experience() {
+  const experience = useContentSlice('experience');
+
   return (
     <Section id="experience" index={2} heading={experience.heading}>
       <div className={styles.roles}>

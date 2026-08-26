@@ -1,8 +1,10 @@
 import Section from './Section';
-import { skills } from '../data/content';
+import { useContentSlice } from '../content/ContentContext';
 import styles from './Skills.module.css';
 
 export default function Skills() {
+  const skills = useContentSlice('skills');
+
   return (
     <Section id="skills" index={3} heading={skills.heading}>
       <div className={styles.grid}>

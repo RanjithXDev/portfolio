@@ -1,8 +1,10 @@
 import Section from './Section';
-import { about } from '../data/content';
+import { useContentSlice } from '../content/ContentContext';
 import styles from './About.module.css';
 
 export default function About() {
+  const about = useContentSlice('about');
+
   return (
     <Section id="about" index={1} heading={about.heading}>
       <div className={styles.body}>
