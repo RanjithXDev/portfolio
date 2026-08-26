@@ -102,9 +102,9 @@ export default function NeuralCore({ quality, sectionMix = 0, radius = 1.05 }) {
   // core visual depth without extra geometry cost.
   const shells = useMemo(() => {
     const configs = [
-      { scale: 1.30, detail: 1, opacity: 0.16, color: AMBER, speed: 0.14, axis: [0.4, 1, 0.15] },
-      { scale: 1.58, detail: 1, opacity: 0.075, color: CYAN, speed: -0.09, axis: [1, 0.25, 0.5] },
-      { scale: 1.86, detail: 1, opacity: 0.042, color: AMBER, speed: 0.05, axis: [0.2, 0.6, 1] },
+      { scale: 1.28, detail: 1, opacity: 0.085, color: AMBER, speed: 0.14, axis: [0.4, 1, 0.15] },
+      { scale: 1.55, detail: 1, opacity: 0.045, color: CYAN, speed: -0.09, axis: [1, 0.25, 0.5] },
+      { scale: 1.84, detail: 1, opacity: 0.028, color: AMBER, speed: 0.05, axis: [0.2, 0.6, 1] },
     ];
     return configs.slice(0, quality.shellCount);
   }, [quality.shellCount]);

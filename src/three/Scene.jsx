@@ -3,6 +3,8 @@ import { Canvas } from '@react-three/fiber';
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import NeuralCore from './NeuralCore';
+import ParticleNetwork from './ParticleNetwork';
+import ToolNodes from './ToolNodes';
 import { getQuality } from './quality';
 import styles from './Scene.module.css';
 
@@ -45,6 +47,8 @@ export default function Scene({ sectionMix = 0 }) {
         <Suspense fallback={null}>
           <Lights />
           <NeuralCore quality={quality} sectionMix={sectionMix} />
+          <ParticleNetwork quality={quality} sectionMix={sectionMix} />
+          <ToolNodes quality={quality} sectionMix={sectionMix} />
 
           {quality.postProcessing && (
             <EffectComposer disableNormalPass multisampling={0}>
