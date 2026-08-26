@@ -3,9 +3,9 @@ import { meta, sections, statusLines } from '../data/content';
 import { useActiveSection, useTypewriter } from '../hooks/useReveal';
 import styles from './Console.module.css';
 
-// Three.js is ~600 kB; loading the orb lazily keeps it out of the initial
+// The 3D stack is ~700 kB; loading it lazily keeps it out of the initial
 // bundle so text content paints first.
-const AgentOrb = lazy(() => import('./AgentOrb'));
+const Scene = lazy(() => import('../three/Scene'));
 
 const SECTION_IDS = ['hero', ...sections.map((section) => section.id)];
 
@@ -24,7 +24,7 @@ export default function Console() {
 
         <div className={styles.orbSlot}>
           <Suspense fallback={<div className={styles.orbFallback} aria-hidden="true" />}>
-            <AgentOrb />
+            <Scene />
           </Suspense>
         </div>
 
