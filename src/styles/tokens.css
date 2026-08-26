@@ -1,0 +1,26 @@
+:root {
+  /* Palette — the exact values from the prototype */
+  --bg: #0a0e12;
+  --panel: #12181f;
+  --line: #223041;
+  --text: #e7eef3;
+  --amber: #ffb454;
+  --cyan: #5eead4;
+
+  /* Derived tones */
+  --text-dim: #8b9aa8;
+  --text-faint: #5b6b7a;
+
+  /* Type */
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Layout */
+  --console-width: 380px;
+  --content-max: 720px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-duration: 700ms;
+}

@@ -1,0 +1,77 @@
+.hero {
+  padding: clamp(4rem, 12vw, 8rem) 0 clamp(3.5rem, 9vw, 6rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.greeting {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--amber);
+  margin-bottom: 0.75rem;
+}
+
+.name {
+  font-size: clamp(2.25rem, 7vw, 3.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.role {
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+
+.tagline {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--cyan);
+  margin-bottom: 1.5rem;
+}
+
+.intro {
+  max-width: 52ch;
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.primary,
+.ghost {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  transition:
+    background-color 200ms var(--ease),
+    border-color 200ms var(--ease),
+    color 200ms var(--ease);
+}
+
+.primary {
+  background: var(--amber);
+  color: var(--bg);
+  border: 1px solid var(--amber);
+  font-weight: 600;
+}
+
+.primary:hover {
+  background: transparent;
+  color: var(--amber);
+}
+
+.ghost {
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+}
+
+.ghost:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}

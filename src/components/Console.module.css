@@ -1,0 +1,181 @@
+.console {
+  grid-area: console;
+  background: var(--panel);
+  border-right: 1px solid var(--line);
+}
+
+.inner {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  min-height: 100vh;
+  padding: var(--gutter);
+  justify-content: center;
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.name {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.role {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--amber);
+}
+
+.focus {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  letter-spacing: 0.02em;
+}
+
+.orbSlot {
+  display: flex;
+  justify-content: center;
+}
+
+/* Reserves the orb's footprint so lazy-loading does not shift the layout. */
+.orbFallback {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 1 / 1;
+}
+
+.nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.navLink,
+.navLinkActive {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.35rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  transition: color 200ms var(--ease);
+}
+
+.navLink:hover {
+  color: var(--text);
+}
+
+.navLinkActive {
+  color: var(--cyan);
+}
+
+.navMarker {
+  width: 14px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+  transition: width 250ms var(--ease);
+}
+
+.navLinkActive .navMarker {
+  width: 26px;
+  opacity: 1;
+}
+
+.terminal {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.75rem 0.9rem;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  /* Two lines of headroom so typing does not reflow the panel. */
+  min-height: 3.25rem;
+}
+
+.prompt {
+  color: var(--amber);
+  flex-shrink: 0;
+}
+
+.status {
+  color: var(--cyan);
+  word-break: break-word;
+}
+
+.cursor {
+  display: inline-block;
+  width: 7px;
+  height: 0.85em;
+  background: var(--cyan);
+  animation: blink 1.1s steps(2, start) infinite;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Console collapses to a top block on narrow screens. */
+@media (max-width: 900px) {
+  .orbSlot {
+    justify-content: flex-start;
+  }
+
+  .orbFallback {
+    max-width: 180px;
+  }
+
+  .console {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .inner {
+    position: static;
+    min-height: auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'orb identity'
+      'terminal terminal';
+    gap: 1rem 1.25rem;
+    align-items: center;
+    padding: 1.25rem var(--gutter);
+  }
+
+  .identity {
+    grid-area: identity;
+  }
+
+  .orbSlot {
+    grid-area: orb;
+  }
+
+  /* The section list duplicates the content order on mobile; the headings
+     themselves are the navigation once everything is stacked. */
+  .nav {
+    display: none;
+  }
+
+  .terminal {
+    grid-area: terminal;
+    min-height: 0;
+  }
+}

@@ -1,0 +1,88 @@
+.note {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  margin-bottom: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.15rem;
+}
+
+.card,
+.cardPlaceholder {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.35rem;
+  border-radius: 5px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  transition:
+    border-color 220ms var(--ease),
+    transform 220ms var(--ease);
+}
+
+.card:hover {
+  border-color: var(--cyan);
+  transform: translateY(-3px);
+}
+
+/* Placeholders read as deliberately unfinished: dashed edge, dimmed, no lift. */
+.cardPlaceholder {
+  border-style: dashed;
+  opacity: 0.72;
+}
+
+.badge {
+  align-self: flex-start;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--amber);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.title {
+  font-size: 0.98rem;
+}
+
+.blurb {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  flex-grow: 1;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-faint);
+}
+
+.tag:not(:last-child)::after {
+  content: ' ·';
+}
+
+.links {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--cyan);
+}
+
+.links a:hover {
+  text-decoration: underline;
+}

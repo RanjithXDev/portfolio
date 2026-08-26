@@ -1,0 +1,36 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.75rem;
+}
+
+.categoryName {
+  font-size: 0.8rem;
+  color: var(--amber);
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.03em;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.item {
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  transition:
+    border-color 200ms var(--ease),
+    color 200ms var(--ease);
+}
+
+.item:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
