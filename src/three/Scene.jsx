@@ -1,10 +1,12 @@
 import { Suspense, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
+import { Grid } from '@react-three/drei';
 import * as THREE from 'three';
 import NeuralCore from './NeuralCore';
 import ParticleNetwork from './ParticleNetwork';
 import ToolNodes from './ToolNodes';
+import CameraRig from './CameraRig';
+import Effects from './Effects';
 import { getQuality } from './quality';
 import styles from './Scene.module.css';
 
@@ -15,14 +17,14 @@ function Lights() {
     <>
       {/* Moody accent rim lighting — no white key light. */}
       <ambientLight intensity={0.12} color="#2A3A48" />
-      <pointLight position={[3.2, 2.4, 2.6]} intensity={22} color="#FFB454" distance={14} decay={2} />
-      <pointLight position={[-3.4, -1.6, 2.0]} intensity={18} color="#5EEAD4" distance={14} decay={2} />
-      <pointLight position={[0, -2.8, -3.2]} intensity={10} color="#FFB454" distance={12} decay={2} />
+      <pointLight position={[3.2, 2.4, 2.6]} intensity={22} color="#FFB454" distance={16} decay={2} />
+      <pointLight position={[-3.4, -1.6, 2.0]} intensity={18} color="#5EEAD4" distance={16} decay={2} />
+      <pointLight position={[0, -2.8, -3.2]} intensity={10} color="#FFB454" distance={14} decay={2} />
     </>
   );
 }
 
-export default function Scene({ sectionMix = 0 }) {
+export default function Scene() {
   const quality = useMemo(() => getQuality(), []);
 
   return (
@@ -34,36 +36,39 @@ export default function Scene({ sectionMix = 0 }) {
           alpha: true,
           powerPreference: quality.tier === 'high' ? 'high-performance' : 'low-power',
         }}
-        camera={{ position: [0, 0, 6.2], fov: 42, near: 0.1, far: 60 }}
+        camera={{ position: [0, 0, 16], fov: 42, near: 0.1, far: 80 }}
         onCreated={({ gl, scene }) => {
           gl.toneMapping = THREE.ACESFilmicToneMapping;
           gl.toneMappingExposure = 0.95;
-          // Exponential fog in the background colour so distant geometry
-          // dissolves into the page rather than ending at a hard edge.
-          scene.fog = new THREE.FogExp2(BG, 0.085);
+          scene.fog = new THREE.FogExp2(BG, 0.075);
         }}
-        frameloop={quality.reducedMotion ? 'demand' : 'always'}
       >
         <Suspense fallback={null}>
           <Lights />
-          <NeuralCore quality={quality} sectionMix={sectionMix} />
-          <ParticleNetwork quality={quality} sectionMix={sectionMix} />
-          <ToolNodes quality={quality} sectionMix={sectionMix} />
+          <CameraRig quality={quality} />
 
-          {quality.postProcessing && (
-            <EffectComposer disableNormalPass multisampling={0}>
-              <Bloom
-                intensity={quality.bloomIntensity}
-                // Threshold sits above the core's mid-tones so only the rim
-                // and node highlights bloom — keeps the glow from flooding.
-                luminanceThreshold={0.42}
-                luminanceSmoothing={0.22}
-                mipmapBlur
-                radius={0.62}
-              />
-              <Vignette offset={0.28} darkness={0.62} eskil={false} />
-            </EffectComposer>
+          <NeuralCore quality={quality} />
+          <ParticleNetwork quality={quality} />
+          <ToolNodes quality={quality} />
+
+          {quality.grid && (
+            <Grid
+              position={[0, -3.4, 0]}
+              args={[40, 40]}
+              cellSize={0.7}
+              cellThickness={0.5}
+              cellColor="#223041"
+              sectionSize={3.5}
+              sectionThickness={0.8}
+              sectionColor="#2E4256"
+              fadeDistance={22}
+              fadeStrength={2.4}
+              infiniteGrid
+              followCamera={false}
+            />
           )}
+
+          {quality.postProcessing && <Effects quality={quality} />}
         </Suspense>
       </Canvas>
     </div>

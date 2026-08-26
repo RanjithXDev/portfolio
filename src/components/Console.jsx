@@ -1,11 +1,6 @@
-import { lazy, Suspense } from 'react';
 import { meta, sections, statusLines } from '../data/content';
 import { useActiveSection, useTypewriter } from '../hooks/useReveal';
 import styles from './Console.module.css';
-
-// The 3D stack is ~700 kB; loading it lazily keeps it out of the initial
-// bundle so text content paints first.
-const Scene = lazy(() => import('../three/Scene'));
 
 const SECTION_IDS = ['hero', ...sections.map((section) => section.id)];
 
@@ -20,12 +15,6 @@ export default function Console() {
           <p className={styles.name}>{meta.name}</p>
           <p className={styles.role}>{meta.role}</p>
           <p className={styles.focus}>{meta.focus}</p>
-        </div>
-
-        <div className={styles.orbSlot}>
-          <Suspense fallback={<div className={styles.orbFallback} aria-hidden="true" />}>
-            <Scene />
-          </Suspense>
         </div>
 
         <nav className={styles.nav} aria-label="Sections">

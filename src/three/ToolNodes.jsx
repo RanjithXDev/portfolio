@@ -1,6 +1,7 @@
 import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { scrollStore } from './scrollStore';
 
 const AMBER = new THREE.Color('#FFB454');
 const CYAN = new THREE.Color('#5EEAD4');
@@ -12,7 +13,7 @@ const TRAIL_ARC = Math.PI * 0.62; // how far behind the node the trail reaches
  * Small glowing spheres on tilted elliptical orbits, each dragging a fading
  * arc behind it — the "tools" the agent core is calling.
  */
-export default function ToolNodes({ quality, sectionMix = 0 }) {
+export default function ToolNodes({ quality }) {
   const nodeRefs = useRef([]);
   const trailRefs = useRef([]);
 
@@ -76,7 +77,7 @@ export default function ToolNodes({ quality, sectionMix = 0 }) {
     <group>
       {orbits.map((orbit, index) => {
         // Blend each node toward the section accent without losing its identity.
-        const color = orbit.color.clone().lerp(orbit.color === AMBER ? CYAN : AMBER, sectionMix * 0.35);
+        const color = orbit.color.clone();
 
         return (
           <group key={`${orbit.a}-${orbit.phase}`} rotation={orbit.tilt}>

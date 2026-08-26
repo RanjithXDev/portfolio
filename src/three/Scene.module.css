@@ -1,18 +1,13 @@
+/* Full-viewport layer sitting behind all page content. */
 .scene {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  max-width: 340px;
-  margin-inline: auto;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
 }
 
 .scene canvas {
   display: block;
-}
-
-@media (max-width: 900px) {
-  .scene {
-    max-width: 180px;
-    margin-inline: 0;
-  }
+  width: 100% !important;
+  height: 100% !important;
 }

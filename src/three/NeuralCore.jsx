@@ -1,6 +1,7 @@
 import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { scrollStore } from './scrollStore';
 import { simplexNoise3D } from './glsl/noise';
 
 const AMBER = new THREE.Color('#FFB454');
@@ -80,7 +81,7 @@ const fragmentShader = /* glsl */ `
  * The signature centrepiece: a noise-displaced, fresnel-lit sphere wrapped in
  * counter-rotating wireframe shells.
  */
-export default function NeuralCore({ quality, sectionMix = 0, radius = 1.05 }) {
+export default function NeuralCore({ quality, radius = 1.05 }) {
   const materialRef = useRef();
   const groupRef = useRef();
   const shellRefs = useRef([]);
@@ -122,7 +123,7 @@ export default function NeuralCore({ quality, sectionMix = 0, radius = 1.05 }) {
       u.uPulse.value = quality.reducedMotion ? 0.35 : breathe * 0.6 + spike * 0.8;
 
       // Ease toward the section's colour balance so transitions never snap.
-      mixRef.current += (sectionMix - mixRef.current) * Math.min(1, delta * 1.8);
+      mixRef.current += (scrollStore.mix - mixRef.current) * Math.min(1, delta * 1.8);
       u.uMix.value = mixRef.current;
     }
 

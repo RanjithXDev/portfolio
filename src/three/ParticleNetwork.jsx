@@ -1,6 +1,7 @@
 import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { scrollStore } from './scrollStore';
 
 const AMBER = new THREE.Color('#FFB454');
 const CYAN = new THREE.Color('#5EEAD4');
@@ -111,7 +112,7 @@ const linesFragment = /* glsl */ `
  * A sparse spherical shell of points with animated connector lines between
  * near neighbours — the "neural net breathing around the core".
  */
-export default function ParticleNetwork({ quality, sectionMix = 0 }) {
+export default function ParticleNetwork({ quality }) {
   const groupRef = useRef();
   const pointsMatRef = useRef();
   const linesMatRef = useRef();
@@ -218,7 +219,7 @@ export default function ParticleNetwork({ quality, sectionMix = 0 }) {
   useFrame((state, delta) => {
     const t = state.clock.elapsedTime;
 
-    mixRef.current += (sectionMix - mixRef.current) * Math.min(1, delta * 1.8);
+    mixRef.current += (scrollStore.mix - mixRef.current) * Math.min(1, delta * 1.8);
 
     if (pointsMatRef.current) {
       pointsMatRef.current.uniforms.uTime.value = quality.reducedMotion ? 0 : t;
