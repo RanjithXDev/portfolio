@@ -86,39 +86,3 @@ export function useActiveSection(ids, fallback) {
 
   return active;
 }
-
-/**
- * Types `text` out one character at a time. Respects prefers-reduced-motion by
- * showing the full string immediately.
- */
-export function useTypewriter(text, speed = 28) {
-  const [output, setOutput] = useState('');
-
-  useEffect(() => {
-    if (!text) {
-      setOutput('');
-      return undefined;
-    }
-
-    const reduceMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (reduceMotion) {
-      setOutput(text);
-      return undefined;
-    }
-
-    setOutput('');
-    let index = 0;
-    const timer = window.setInterval(() => {
-      index += 1;
-      setOutput(text.slice(0, index));
-      if (index >= text.length) window.clearInterval(timer);
-    }, speed);
-
-    return () => window.clearInterval(timer);
-  }, [text, speed]);
-
-  return output;
-}

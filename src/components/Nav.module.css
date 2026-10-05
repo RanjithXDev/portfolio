@@ -1,0 +1,168 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: var(--space-4) var(--gutter) 0;
+}
+
+.bar {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: 0.65rem 0.65rem 0.65rem 1.15rem;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 2px rgba(17, 17, 17, 0.03);
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-inline: auto;
+}
+
+.link,
+.linkActive {
+  position: relative;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  padding: 0.3rem 0.1rem;
+  transition: color 180ms var(--ease);
+}
+
+.link::after,
+.linkActive::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: right 220ms var(--ease);
+}
+
+.link:hover {
+  color: var(--text);
+}
+
+.link:hover::after {
+  right: 0;
+}
+
+.linkActive {
+  color: var(--text);
+}
+
+.linkActive::after {
+  right: 0;
+}
+
+.cta {
+  flex-shrink: 0;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-md);
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition:
+    transform 180ms var(--ease),
+    background-color 180ms var(--ease);
+}
+
+.cta:hover {
+  transform: translateY(-1px);
+  background: var(--accent);
+}
+
+.toggle {
+  display: none;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+  color: var(--text);
+}
+
+/* Hidden entirely outside the mobile breakpoint so its links never sit in
+   the desktop tab order or duplicate the "Sections" landmark. */
+.mobile,
+.mobileOpen {
+  display: none;
+}
+
+.mobileLink,
+.mobileLinkActive {
+  padding: var(--space-3) 0;
+  font-size: 0.98rem;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--line);
+}
+
+.mobileLink:last-child,
+.mobileLinkActive:last-child {
+  border-bottom: none;
+}
+
+.mobileLinkActive {
+  color: var(--accent);
+}
+
+@media (max-width: 760px) {
+  .links,
+  .cta {
+    display: none;
+  }
+
+  .toggle {
+    display: block;
+    margin-left: auto;
+  }
+
+  .mobile,
+  .mobileOpen {
+    display: flex;
+    flex-direction: column;
+    max-width: var(--content-max);
+    margin-inline: auto;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      max-height 260ms var(--ease),
+      opacity 200ms var(--ease),
+      visibility 0ms 260ms;
+  }
+
+  .mobileOpen {
+    max-height: 24rem;
+    opacity: 1;
+    visibility: visible;
+    margin-top: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    transition:
+      max-height 260ms var(--ease),
+      opacity 200ms var(--ease);
+  }
+}

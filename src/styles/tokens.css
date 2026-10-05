@@ -1,26 +1,64 @@
 :root {
-  /* Palette — the exact values from the prototype */
-  --bg: #0a0e12;
-  --panel: #12181f;
-  --line: #223041;
-  --text: #e7eef3;
-  --amber: #ffb454;
-  --cyan: #5eead4;
+  /* Palette — bright, warm-neutral, one accent. Target mix ~80% white/light,
+     15% near-black, 5% accent. */
+  --bg: #ffffff;
+  --bg-secondary: #f7f7f5;
+  --bg-tertiary: #f1f0ec;
 
-  /* Derived tones */
-  --text-dim: #8b9aa8;
-  --text-faint: #5b6b7a;
+  --text: #111111;
+  --text-dim: #58564f;
+  /* Darkened from a lighter gray to clear 4.5:1 AA contrast on white — this
+     token is used for real body-size text (dates, tags, meta labels), not
+     just decoration. */
+  --text-faint: #6f6c64;
+
+  --line: #e7e5e0;
+  --line-strong: #d7d4cb;
+
+  /* Single accent — used deliberately, not as a wash. */
+  --accent: #2e5cff;
+  --accent-soft: #2e5cff12;
+  --accent-dim: #2447cc;
+
+  /* Inverted (near-black) surface, reserved for the closing/contact block. */
+  --ink: #111111;
+  --ink-raised: #1b1b1b;
+  --on-ink: #faf9f6;
+  --on-ink-dim: #a8a6a0;
+  --on-ink-line: #333331;
+  /* --accent lightened for AA contrast on --ink (regular --accent is ~3.7:1
+     on black, below the 4.5:1 text threshold; this variant is ~6.1:1). */
+  --accent-on-ink: #6b8cff;
 
   /* Type */
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 6rem;
+
+  /* Radii — small and consistent, never decorative */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
 
   /* Layout */
-  --console-width: 380px;
-  --content-max: 720px;
+  --content-max: 1160px;
+  --text-max: 760px;
   --gutter: clamp(1.25rem, 4vw, 3rem);
+  --nav-height: 4.25rem;
 
   /* Motion */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --reveal-duration: 700ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --reveal-duration: 600ms;
 }

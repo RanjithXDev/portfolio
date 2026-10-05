@@ -27,15 +27,36 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  line-height: 1.2;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.1;
   letter-spacing: -0.01em;
   margin: 0;
 }
 
 p {
   margin: 0;
+}
+
+/* Small caps-style mono labels used for eyebrows, tags and status text. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Extremely fine background grid — a hairline texture, not a pattern you
+   consciously notice. Used behind the hero and the closing section only. */
+.bgGrid {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center top;
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent);
+  mask-image: linear-gradient(to bottom, black, transparent);
 }
 
 ul {
@@ -51,7 +72,7 @@ a {
 
 /* Keyboard focus must always be visible. */
 :focus-visible {
-  outline: 2px solid var(--cyan);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -63,6 +84,7 @@ a {
   transition:
     opacity var(--reveal-duration) var(--ease),
     transform var(--reveal-duration) var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 .reveal.is-visible {
@@ -76,7 +98,7 @@ a {
   top: 0;
   z-index: 100;
   padding: 0.6rem 1rem;
-  background: var(--amber);
+  background: var(--accent);
   color: var(--bg);
   font-family: var(--font-mono);
   font-size: 0.85rem;

@@ -9,45 +9,55 @@ export default function Projects() {
     <Section id="projects" index={5} heading={projects.heading}>
       {projects.note && <p className={styles.note}>{projects.note}</p>}
 
-      <div className={styles.grid}>
-        {projects.items.map((project) => (
+      <div className={styles.list}>
+        {projects.items.map((project, i) => (
           <article
             key={project.title}
-            className={project.placeholder ? styles.cardPlaceholder : styles.card}
+            className={i % 2 === 1 ? styles.rowReverse : styles.row}
           >
-            {project.placeholder && (
-              <span className={styles.badge}>Placeholder</span>
-            )}
+            <div className={styles.visual}>
+              {project.image ? (
+                <img src={project.image} alt={`Screenshot of ${project.title}`} loading="lazy" />
+              ) : (
+                <div className={styles.visualPlaceholder} aria-hidden="true">
+                  <span className={styles.visualIndex}>{String(i + 1).padStart(2, '0')}</span>
+                </div>
+              )}
+            </div>
 
-            <h3 className={styles.title}>{project.title}</h3>
-            <p className={styles.blurb}>{project.blurb}</p>
+            <div className={styles.text}>
+              {project.placeholder && <span className={styles.badge}>In progress</span>}
 
-            {project.tags?.length > 0 && (
-              <ul className={styles.tags}>
-                {project.tags.map((tag) => (
-                  <li key={tag} className={styles.tag}>
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            )}
+              <h3 className={styles.title}>{project.title}</h3>
+              <p className={styles.blurb}>{project.blurb}</p>
 
-            {/* Links render only when a URL is actually set, so placeholder
-                cards never show dead anchors. */}
-            {(project.repoUrl || project.liveUrl) && (
-              <div className={styles.links}>
-                {project.repoUrl && (
-                  <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">
-                    Code ↗
-                  </a>
-                )}
-                {project.liveUrl && (
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                    Live ↗
-                  </a>
-                )}
-              </div>
-            )}
+              {project.tags?.length > 0 && (
+                <ul className={styles.tags}>
+                  {project.tags.map((tag) => (
+                    <li key={tag} className={styles.tag}>
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {/* Links render only when a URL is actually set, so placeholder
+                  projects never show dead anchors. */}
+              {(project.repoUrl || project.liveUrl) && (
+                <div className={styles.links}>
+                  {project.liveUrl && (
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                      View live ↗
+                    </a>
+                  )}
+                  {project.repoUrl && (
+                    <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+                      Source ↗
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
           </article>
         ))}
       </div>

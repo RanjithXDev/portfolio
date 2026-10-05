@@ -22,7 +22,6 @@ const payload = {
   credentials: content.credentials,
   projects: content.projects,
   contact: content.contact,
-  statusLines: content.statusLines,
   sections: content.sections,
   footer: content.footer,
 };

@@ -27,7 +27,6 @@ never need to touch a component to update your information.
 | Contact rows and links | `contact.links` |
 | Education entries | `credentials.education` |
 | Certifications (and their PDFs) | `credentials.certifications.items` |
-| Terminal status lines per section | `statusLines` |
 | Left-hand nav order | `sections` |
 
 ### Adding a certification

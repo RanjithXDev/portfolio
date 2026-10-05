@@ -15,7 +15,6 @@ const baseContent = {
   credentials: bundled.credentials,
   projects: bundled.projects,
   contact: bundled.contact,
-  statusLines: bundled.statusLines,
   sections: bundled.sections,
   footer: bundled.footer,
 };

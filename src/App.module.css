@@ -1,42 +1,5 @@
-.layout {
-  position: relative;
-  /* Sits above the fixed 3D layer. */
-  z-index: 1;
-  display: grid;
-  grid-template-columns: var(--console-width) minmax(0, 1fr);
-  grid-template-areas: 'console content';
-  min-height: 100vh;
-}
-
-.content {
-  grid-area: content;
-  padding-inline: var(--gutter);
-  /* Scrim so body copy stays legible over the moving scene behind it. */
-  background: linear-gradient(
-    to right,
-    rgba(10, 14, 18, 0.86) 0%,
-    rgba(10, 14, 18, 0.78) 40%,
-    rgba(10, 14, 18, 0.62) 100%
-  );
-}
-
-@media (max-width: 900px) {
-  .content {
-    background: rgba(10, 14, 18, 0.88);
-  }
-}
-
 .inner {
   max-width: var(--content-max);
   margin-inline: auto;
-}
-
-/* Console collapses to a top block; content flows beneath it. */
-@media (max-width: 900px) {
-  .layout {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      'console'
-      'content';
-  }
+  padding-inline: var(--gutter);
 }

@@ -10,10 +10,10 @@
 // Palette — must stay in sync with src/styles/tokens.css
 // ---------------------------------------------------------------------------
 export const palette = {
-  background: '#0A0E12',
-  amber: '#FFB454',
+  background: '#0A0A0C',
+  amber: '#E8A15A',
   cyan: '#5EEAD4',
-  ambient: '#2A3A48',
+  ambient: '#2A2A30',
 };
 
 // ---------------------------------------------------------------------------
@@ -158,9 +158,9 @@ export const environment = {
   grid: {
     position: [0, -3.4, 0],
     cellSize: 0.7,
-    cellColor: '#223041',
+    cellColor: '#232327',
     sectionSize: 3.5,
-    sectionColor: '#2E4256',
+    sectionColor: '#33333a',
     fadeDistance: 22,
     fadeStrength: 2.4,
   },

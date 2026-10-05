@@ -1,5 +1,4 @@
-import { lazy, Suspense } from 'react';
-import Console from './components/Console';
+import Nav from './components/Nav';
 import Hero from './components/Hero';
 import About from './components/About';
 import Experience from './components/Experience';
@@ -9,41 +8,30 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import { ContentProvider } from './content/ContentContext';
-import { useScrollCamera } from './hooks/useScrollCamera';
 import styles from './App.module.css';
 
-// The 3D stack is ~900 kB; lazy-loading keeps it out of the initial bundle.
-const Scene = lazy(() => import('./three/Scene'));
-
 export default function App() {
-  useScrollCamera();
-
   return (
     <ContentProvider>
-      <Suspense fallback={null}>
-        <Scene />
-      </Suspense>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
 
-      <div className={styles.layout}>
-        <a className="skip-link" href="#main">
-          Skip to content
-        </a>
+      <Nav />
 
-        <Console />
+      <main id="main">
+        <div className={styles.inner}>
+          <Hero />
+          <About />
+          <Experience />
+          <Skills />
+          <Credentials />
+          <Projects />
+        </div>
 
-        <main id="main" className={styles.content}>
-          <div className={styles.inner}>
-            <Hero />
-            <About />
-            <Experience />
-            <Skills />
-            <Credentials />
-            <Projects />
-            <Contact />
-            <Footer />
-          </div>
-        </main>
-      </div>
+        <Contact />
+        <Footer />
+      </main>
     </ContentProvider>
   );
 }

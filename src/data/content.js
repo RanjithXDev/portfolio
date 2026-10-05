@@ -12,7 +12,7 @@ export const meta = {
   // Used for Open Graph tags and the canonical link. Update after deploying.
   siteUrl: 'https://ranjithxdev.dev',
   // Path under public/. Set to '' to hide the CV link entirely.
-  resume: '/Ranjith_CV.pdf',
+  resume: '/Ranjith_Resume.pdf',
   description:
     'Junior Software Engineer building AI agents and cloud applications with AWS Bedrock, Amazon Bedrock AgentCore, Python and the MERN stack.',
 };
@@ -27,7 +27,7 @@ export const hero = {
   actions: [
     { label: 'View Experience', href: '#experience', variant: 'primary' },
     { label: 'Get in Touch', href: '#contact', variant: 'ghost' },
-    { label: 'Download CV', href: '/Ranjith_CV.pdf', variant: 'ghost', download: true },
+    { label: 'Download CV', href: '/Ranjith_Resume.pdf', variant: 'ghost', download: true },
   ],
 };
 
@@ -44,7 +44,7 @@ export const experience = {
   heading: 'Experience',
   roles: [
     {
-      title: 'Junior Software Engineer Intern',
+      title: 'Junior Software Engineer',
       dates: '2026 — Present',
       bullets: [
         'Developed AI-powered enterprise solutions using AWS, Amazon Bedrock, AgentCore Runtime, and Strands Agents, focusing on agent-based workflows and real-world business use cases.',
@@ -64,23 +64,31 @@ export const skills = {
   categories: [
     {
       name: 'AI & Agents',
-      items: ['AWS Bedrock', 'AgentCore Runtime', 'Strands Agents', 'MCP Tools', 'Machine Learning'],
+      items: [
+        'AWS Bedrock',
+        'AgentCore Runtime',
+        'Strands Agents',
+        'MCP Tools',
+        'Machine Learning',
+        'Knowledge Bases',
+        'RAG',
+      ],
     },
     {
       name: 'Automation & Workflow',
-      items: ['Flowise', 'Activepieces', 'REST APIs', 'Knowledge Bases'],
+      items: ['Flowise', 'Activepieces', 'n8n'],
     },
     {
       name: 'Full Stack',
-      items: ['MERN Stack', 'Python', 'JavaScript', 'Node.js', 'React', 'SQL'],
+      items: ['MERN Stack', 'Python', 'Java', 'JavaScript', 'Node.js', 'React', 'SQL', 'REST APIs'],
     },
     {
       name: 'Cloud & Infra',
       items: ['EC2', 'IAM', 'S3', 'Lambda', 'EBS', 'Auto Scaling', 'Elastic Load Balancing'],
     },
     {
-      name: 'Web',
-      items: ['WordPress', 'PHP', 'BuddyBoss', 'HTML/CSS'],
+      name: 'Security',
+      items: ['Keycloak', 'IAM', 'OAuth'],
     },
   ],
 };
@@ -133,6 +141,12 @@ export const credentials = {
         year: '',
         file: '/oracle_certificate.pdf',
       },
+      {
+        name: 'Oracle Certified Professional: Java SE 17 Developer',
+        issuer: 'Oracle',
+        year: '',
+        file: '/oracle_java_certificate.pdf',
+      },
     ],
   },
 };
@@ -145,17 +159,19 @@ export const credentials = {
  *     title:       'Project name',
  *     blurb:       'One or two sentences on what it does and why it matters.',
  *     tags:        ['Python', 'Bedrock'],
+ *     image:       '',                          // path under public/; omit for a typographic placeholder
  *     repoUrl:     'https://github.com/...',   // omit or leave '' to hide the link
  *     liveUrl:     '',                          // omit or leave '' to hide the link
  *     placeholder: false,                       // set false once it is real
  *   }
  *
- * Cards with `placeholder: true` render in a visibly-unfinished style so you
- * never ship a fake project by accident.
+ * Entries with `placeholder: true` render an "In progress" tag so you never
+ * ship a fake project by accident. The first entry in this array always gets
+ * a larger, featured treatment — put your strongest project first.
  */
 export const projects = {
   heading: 'Projects',
-  note: 'Placeholder cards — real projects coming soon.',
+  note: 'Real projects coming soon — these slots are reserved for work in progress.',
   items: [
     {
       title: 'Project Slot 01',
@@ -189,7 +205,9 @@ export const projects = {
 
 export const contact = {
   heading: 'Contact',
-  intro: 'Open to opportunities in AI engineering and cloud development. The fastest way to reach me is email.',
+  statement: 'Have a project, a role, or just an idea worth talking through?',
+  intro:
+    'I’m open to new projects, freelance work, collaborations and full-time opportunities in AI engineering and cloud development. The fastest way to reach me is email — I read everything myself.',
   email: 'ranjithxdev@gmail.com',
   location: 'Chennai, Tamil Nadu, India',
   links: [
@@ -197,20 +215,6 @@ export const contact = {
     { label: 'GitHub', href: 'https://github.com/RanjithXDev', handle: '@RanjithXDev' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ranjith-mv-baab48295/', handle: 'Ranjith MV' },
   ],
-};
-
-/**
- * Terminal status lines. The Console types these out as each section
- * scrolls into view — keyed by section id.
- */
-export const statusLines = {
-  hero: 'agent.init() — session ready',
-  about: 'loading profile.json — 3 records',
-  experience: 'querying work_history — 1 role active',
-  skills: 'indexing capabilities — 5 categories',
-  credentials: 'verifying credentials — 2 certifications',
-  projects: 'scanning repositories — 3 slots reserved',
-  contact: 'opening channel — awaiting input',
 };
 
 export const sections = [
@@ -224,5 +228,5 @@ export const sections = [
 
 export const footer = {
   text: `© ${new Date().getFullYear()} Ranjith MV`,
-  note: 'Built with React, Vite and Three.js',
+  note: 'Built with React and Vite',
 };

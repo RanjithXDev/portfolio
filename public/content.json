@@ -6,7 +6,7 @@
     "email": "ranjithxdev@gmail.com",
     "location": "Chennai, Tamil Nadu, India",
     "siteUrl": "https://ranjithxdev.dev",
-    "resume": "/Ranjith_CV.pdf",
+    "resume": "/Ranjith_Resume.pdf",
     "description": "Junior Software Engineer building AI agents and cloud applications with AWS Bedrock, Amazon Bedrock AgentCore, Python and the MERN stack."
   },
   "hero": {
@@ -28,7 +28,7 @@
       },
       {
         "label": "Download CV",
-        "href": "/Ranjith_CV.pdf",
+        "href": "/Ranjith_Resume.pdf",
         "variant": "ghost",
         "download": true
       }
@@ -46,7 +46,7 @@
     "heading": "Experience",
     "roles": [
       {
-        "title": "Junior Software Engineer Intern",
+        "title": "Junior Software Engineer",
         "dates": "2026 — Present",
         "bullets": [
           "Developed AI-powered enterprise solutions using AWS, Amazon Bedrock, AgentCore Runtime, and Strands Agents, focusing on agent-based workflows and real-world business use cases.",
@@ -70,7 +70,9 @@
           "AgentCore Runtime",
           "Strands Agents",
           "MCP Tools",
-          "Machine Learning"
+          "Machine Learning",
+          "Knowledge Bases",
+          "RAG"
         ]
       },
       {
@@ -78,8 +80,7 @@
         "items": [
           "Flowise",
           "Activepieces",
-          "REST APIs",
-          "Knowledge Bases"
+          "n8n"
         ]
       },
       {
@@ -87,10 +88,12 @@
         "items": [
           "MERN Stack",
           "Python",
+          "Java",
           "JavaScript",
           "Node.js",
           "React",
-          "SQL"
+          "SQL",
+          "REST APIs"
         ]
       },
       {
@@ -106,12 +109,11 @@
         ]
       },
       {
-        "name": "Web",
+        "name": "Security",
         "items": [
-          "WordPress",
-          "PHP",
-          "BuddyBoss",
-          "HTML/CSS"
+          "Keycloak",
+          "IAM",
+          "OAuth"
         ]
       }
     ]
@@ -146,13 +148,19 @@
           "issuer": "Oracle",
           "year": "",
           "file": "/oracle_certificate.pdf"
+        },
+        {
+          "name": "Oracle Certified Professional: Java SE 17 Developer",
+          "issuer": "Oracle",
+          "year": "",
+          "file": "/oracle_java_certificate.pdf"
         }
       ]
     }
   },
   "projects": {
     "heading": "Projects",
-    "note": "Placeholder cards — real projects coming soon.",
+    "note": "Real projects coming soon — these slots are reserved for work in progress.",
     "items": [
       {
         "title": "Project Slot 01",
@@ -194,7 +202,8 @@
   },
   "contact": {
     "heading": "Contact",
-    "intro": "Open to opportunities in AI engineering and cloud development. The fastest way to reach me is email.",
+    "statement": "Have a project, a role, or just an idea worth talking through?",
+    "intro": "I’m open to new projects, freelance work, collaborations and full-time opportunities in AI engineering and cloud development. The fastest way to reach me is email — I read everything myself.",
     "email": "ranjithxdev@gmail.com",
     "location": "Chennai, Tamil Nadu, India",
     "links": [
@@ -214,15 +223,6 @@
         "handle": "Ranjith MV"
       }
     ]
-  },
-  "statusLines": {
-    "hero": "agent.init() — session ready",
-    "about": "loading profile.json — 3 records",
-    "experience": "querying work_history — 1 role active",
-    "skills": "indexing capabilities — 5 categories",
-    "credentials": "verifying credentials — 2 certifications",
-    "projects": "scanning repositories — 3 slots reserved",
-    "contact": "opening channel — awaiting input"
   },
   "sections": [
     {
@@ -252,6 +252,6 @@
   ],
   "footer": {
     "text": "© 2026 Ranjith MV",
-    "note": "Built with React, Vite and Three.js"
+    "note": "Built with React and Vite"
   }
 }
