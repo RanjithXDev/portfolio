@@ -1,0 +1,13 @@
+/* Full-viewport layer sitting behind all page content. */
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.scene canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}

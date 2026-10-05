@@ -1,0 +1,185 @@
+.hero {
+  position: relative;
+  padding: clamp(4.5rem, 14vw, 8.5rem) 0 clamp(4rem, 10vw, 6.5rem);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.mark {
+  position: absolute;
+  top: clamp(2rem, 8vw, 4.5rem);
+  right: clamp(0.5rem, 6vw, 6rem);
+  z-index: 0;
+  pointer-events: none;
+  /* Only the pointer-follow translate lives here; rotation is on the child
+     .markSpin so the two transforms don't fight over the same property. */
+  transform: translate(calc(var(--mx, 0) * 14px), calc(var(--my, 0) * 14px));
+  transition: transform 300ms var(--ease-out);
+}
+
+.markSpin {
+  animation: spin 60s linear infinite;
+}
+
+.mark svg {
+  display: block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 760px) {
+  .mark {
+    opacity: 0.5;
+    transform: scale(0.7);
+  }
+}
+
+.greeting,
+.name,
+.role,
+.tagline,
+.intro,
+.actions,
+.social {
+  position: relative;
+  z-index: 1;
+  animation: rise 700ms var(--ease-out) both;
+}
+
+.name { animation-delay: 60ms; }
+.role { animation-delay: 120ms; }
+.tagline { animation-delay: 160ms; }
+.intro { animation-delay: 200ms; }
+.actions { animation-delay: 260ms; }
+.social { animation-delay: 320ms; }
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.greeting {
+  margin-bottom: var(--space-4);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.75rem, 8.5vw, 5.75rem);
+  line-height: 1.03;
+  letter-spacing: -0.015em;
+  max-width: 16ch;
+  margin-bottom: var(--space-3);
+}
+
+.role {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+  color: var(--text);
+  margin-bottom: var(--space-2);
+}
+
+.tagline {
+  color: var(--text-faint);
+  margin-bottom: var(--space-6);
+}
+
+.intro {
+  max-width: 52ch;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+  margin-bottom: var(--space-6);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-7);
+}
+
+.primary,
+.ghost {
+  display: inline-block;
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.92rem;
+  transition:
+    background-color 200ms var(--ease),
+    border-color 200ms var(--ease),
+    color 200ms var(--ease),
+    transform 200ms var(--ease);
+}
+
+.primary {
+  background: var(--text);
+  color: var(--bg);
+  border: 1px solid var(--text);
+}
+
+.primary:hover {
+  transform: translateY(-1px);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.ghost {
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+}
+
+.ghost:hover {
+  border-color: var(--text);
+  transform: translateY(-1px);
+}
+
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+.social a {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  transition: color 200ms var(--ease);
+}
+
+.social a:hover {
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark {
+    transform: none;
+  }
+
+  .markSpin {
+    animation: none;
+  }
+}

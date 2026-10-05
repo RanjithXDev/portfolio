@@ -1,0 +1,65 @@
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-8);
+}
+
+.lead {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  color: var(--text-dim);
+  font-size: 0.96rem;
+  line-height: 1.7;
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+
+.fact {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.fact dt {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.fact dd {
+  margin: 0;
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}

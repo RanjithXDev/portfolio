@@ -1,0 +1,26 @@
+.section {
+  padding: clamp(3.5rem, 9vw, 6.5rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.section:last-of-type {
+  border-bottom: none;
+}
+
+.heading {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3.5vw, 2.15rem);
+  color: var(--text);
+}
+
+.index {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
