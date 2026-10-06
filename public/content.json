@@ -154,49 +154,56 @@
           "issuer": "Oracle",
           "year": "",
           "file": "/oracle_java_certificate.pdf"
+        },
+        {
+          "name": "AWS Certified AI Practitioner",
+          "issuer": "Amazon Web Services",
+          "year": "2026",
+          "file": "/aws_ai_practitioner_certificate.pdf"
         }
       ]
     }
   },
   "projects": {
     "heading": "Projects",
-    "note": "Real projects coming soon — these slots are reserved for work in progress.",
     "items": [
       {
-        "title": "Project Slot 01",
-        "blurb": "Reserved for an agent-based project — e.g. the healthcare discharge-coordination workflow built on Bedrock AgentCore.",
+        "title": "LQ-LegalAI",
+        "blurb": "An agentic legal document analysis platform I designed and built solo, end to end — a 13+ agent LangGraph pipeline on Amazon Bedrock handling clause extraction, risk scoring, a grounded Q&A chatbot, AI drafting, and English-Tamil translation. Hybrid BM25 + vector retrieval, tracked on F1, recall, and latency; shipped on ECS Fargate with PII masking before translation.",
         "tags": [
-          "AWS Bedrock",
-          "AgentCore",
+          "LangGraph",
+          "Amazon Bedrock",
+          "FastAPI",
+          "React",
+          "TypeScript",
+          "AWS"
+        ],
+        "repoUrl": "",
+        "liveUrl": "",
+        "placeholder": false
+      },
+      {
+        "title": "AI-Powered Road Safety Assessment Portal",
+        "blurb": "Backend services for an AI-driven road safety platform built for the Young Indians (Yi) organization, working directly with their stakeholders on requirements. Integrated the Google Vision API to extract data from PDF reports and automated real-time certificate generation from dynamic templates.",
+        "tags": [
+          "Google Vision API",
+          "Python",
+          "Automation"
+        ],
+        "repoUrl": "",
+        "liveUrl": "",
+        "placeholder": false
+      },
+      {
+        "title": "Dyslexia Screening Tool",
+        "blurb": "A machine learning model that detects early signs of dyslexia from test responses and reading patterns, wrapped in a simple interface so teachers and parents get instant screening results without technical knowledge.",
+        "tags": [
+          "Machine Learning",
           "Python"
         ],
         "repoUrl": "",
         "liveUrl": "",
-        "placeholder": true
-      },
-      {
-        "title": "Project Slot 02",
-        "blurb": "Reserved for a full-stack build — e.g. a MERN application with REST API and AI capabilities integrated.",
-        "tags": [
-          "React",
-          "Node.js",
-          "SQL"
-        ],
-        "repoUrl": "",
-        "liveUrl": "",
-        "placeholder": true
-      },
-      {
-        "title": "Project Slot 03",
-        "blurb": "Reserved for an automation project — e.g. a Flowise or Activepieces workflow handling SLA monitoring and escalation.",
-        "tags": [
-          "Flowise",
-          "Activepieces",
-          "REST APIs"
-        ],
-        "repoUrl": "",
-        "liveUrl": "",
-        "placeholder": true
+        "placeholder": false
       }
     ]
   },
